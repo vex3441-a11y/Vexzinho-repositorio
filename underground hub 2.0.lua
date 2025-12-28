@@ -650,4 +650,289 @@ Tabs.Movement:AddButton({
 Tabs.Movement:AddButton({
     Title = "🦘 Super Jump",
     Callback = function()
-        local h
+        local h = GetHum()
+        if h then
+            h.JumpPower = 150
+            Fluent:Notify({Title = "Super Jump", Content = "🟣 Jump power increased!", Duration = 3})
+        end
+    end
+})
+
+Tabs.Movement:AddButton({
+    Title = "♾️ Infinite Jump",
+    Callback = function()
+        UserInputService.JumpRequest:Connect(function()
+            local h = GetHum()
+            if h then
+                h:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+        Fluent:Notify({Title = "Infinite Jump", Content = "🟣 Jump infinitely!", Duration = 3})
+    end
+})
+
+-- VISUAL TAB
+Tabs.Visual:AddToggle("ESP", {
+    Title = "👁️ ESP Amethyst",
+    Default = false,
+    Callback = function(v)
+        ESPEnabled = v
+        if v then
+            for _, p in pairs(Players:GetPlayers()) do
+                CreateESP(p)
+            end
+            Players.PlayerAdded:Connect(function(p)
+                if ESPEnabled then
+                    p.CharacterAdded:Connect(function()
+                        wait(1)
+                        if ESPEnabled then CreateESP(p) end
+                    end)
+                end
+            end)
+            Fluent:Notify({Title = "ESP", Content = "🟣 ESP activated!", Duration = 3})
+        else
+            RemoveESP()
+        end
+    end
+})
+
+Tabs.Visual:AddButton({
+    Title = "💡 FullBright",
+    Callback = function()
+        local L = game:GetService("Lighting")
+        L.Brightness = 2
+        L.ClockTime = 14
+        L.FogEnd = 999999
+        L.GlobalShadows = false
+        Fluent:Notify({Title = "FullBright", Content = "🟣 Max brightness!", Duration = 3})
+    end
+})
+
+Tabs.Visual:AddButton({
+    Title = "👻 Invisible",
+    Callback = function()
+        for _, p in pairs(GetChar():GetDescendants()) do
+            if p:IsA("BasePart") or p:IsA("Decal") then
+                p.Transparency = 1
+            end
+        end
+        Fluent:Notify({Title = "Invisible", Content = "🟣 You're invisible!", Duration = 3})
+    end
+})
+
+Tabs.Visual:AddButton({
+    Title = "👤 Visible",
+    Callback = function()
+        for _, p in pairs(GetChar():GetDescendants()) do
+            if p:IsA("BasePart") and p.Name ~= "HumanoidRootPart" then
+                p.Transparency = 0
+            elseif p:IsA("Decal") then
+                p.Transparency = 0
+            end
+        end
+        Fluent:Notify({Title = "Visible", Content = "Visibility restored!", Duration = 2})
+    end
+})
+
+-- TELEPORT TAB
+local tpLocations = {
+    {name = "🏠 Spawn", pos = Vector3.new(0, 50, 0)},
+    {name = "🏔️ High Tower", pos = Vector3.new(-300, 200, -300)},
+    {name = "🏰 Center Base", pos = Vector3.new(0, 50, 0)},
+    {name = "🕳️ Secret Bunker", pos = Vector3.new(1000, 10, 1000)},
+    {name = "☁️ Sky", pos = Vector3.new(0, 500, 0)}
+}
+
+for _, loc in pairs(tpLocations) do
+    Tabs.Teleport:AddButton({
+        Title = loc.name,
+        Callback = function()
+            local r = GetRoot()
+            if r then
+                r.CFrame = CFrame.new(loc.pos)
+                Fluent:Notify({Title = "Teleported", Content = "🟣 Teleported!", Duration = 2})
+            end
+        end
+    })
+end
+
+-- SETTINGS TAB
+Tabs.Settings:AddKeybind("MinimizeKey", {
+    Title = "⌨️ Open/Close Shortcut",
+    Mode = "Toggle",
+    Default = "RightControl",
+    Callback = function()
+        Window:Minimize()
+    end
+})
+
+Tabs.Settings:AddButton({
+    Title = "❌ Close Hub",
+    Callback = function()
+        StopFly()
+        RemoveESP()
+        if Connections.AutoKill then Connections.AutoKill:Disconnect() end
+        if Connections.Aim then Connections.Aim:Disconnect() end
+        _G.UndergroundHubUser = false
+        Fluent:Notify({Title = "Goodbye", Content = "🟣 See you!", Duration = 2})
+        wait(2)
+        Fluent:Destroy()
+    end
+})
+
+Tabs.Settings:AddParagraph({
+    Title = "Information",
+    Content = "🟣 Underground Hub 2.0\n👤 By Vex\n📅 2024\n✅ Anti-Cheat Bypass Active\n\n⌨️ PC: RightCtrl = Open/Close\n📱 Mobile: Purple Button 🟣 (Draggable)\n\n🎮 Fly Controls:\n• Joystick = Move\n• Camera = Direction\n• Space = Up\n• Shift = Down"
+})
+
+-- TROLL TAB (UNLOCKABLE)
+spawn(function()
+    repeat wait(0.5) until TrollUnlocked
+    
+    local TrollTab = Window:AddTab({Title = "😈 Troll", Icon = "laugh"})
+    
+    TrollTab:AddButton({
+        Title = "🌀 Create Kamui Dimension",
+        Callback = function()
+            CreateKamui()
+        end
+    })
+    
+    local playerList = {}
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer then table.insert(playerList, p.Name) end
+    end
+    
+    local dropdown = TrollTab:AddDropdown("KamuiPlayer", {
+        Title = "Select Player",
+        Values = playerList,
+        Default = 1
+    })
+    
+    TrollTab:AddButton({
+        Title = "📤 Send to Kamui",
+        Callback = function()
+            SendToKamui(dropdown.Value)
+        end
+    })
+    
+    TrollTab:AddButton({
+        Title = "📥 Release from Kamui",
+        Callback = function()
+            ReleaseFromKamui(dropdown.Value)
+        end
+    })
+    
+    TrollTab:AddButton({
+        Title = "📋 Players in Kamui",
+        Callback = function()
+            if #KamuiPlayers > 0 then
+                local list = "Trapped in Kamui:\n"
+                for i, name in ipairs(KamuiPlayers) do
+                    list = list .. i .. ". " .. name .. "\n"
+                end
+                Fluent:Notify({Title = "Kamui", Content = list, Duration = 8})
+            else
+                Fluent:Notify({Title = "Kamui", Content = "No players trapped", Duration = 3})
+            end
+        end
+    })
+    
+    TrollTab:AddButton({
+        Title = "🚀 Fling All",
+        Callback = function()
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Character then
+                    local r = p.Character:FindFirstChild("HumanoidRootPart")
+                    if r then
+                        r.Velocity = Vector3.new(math.random(-600, 600), 1200, math.random(-600, 600))
+                    end
+                end
+            end
+            Fluent:Notify({Title = "Fling", Content = "🟣 Everyone flung!", Duration = 3})
+        end
+    })
+    
+    TrollTab:AddButton({
+        Title = "🌀 Spin All",
+        Callback = function()
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Character then
+                    local r = p.Character:FindFirstChild("HumanoidRootPart")
+                    if r then
+                        local spin = Instance.new("BodyAngularVelocity", r)
+                        spin.MaxTorque = Vector3.new(0, math.huge, 0)
+                        spin.AngularVelocity = Vector3.new(0, 70, 0)
+                        task.delay(6, function()
+                            if spin then spin:Destroy() end
+                        end)
+                    end
+                end
+            end
+            Fluent:Notify({Title = "Spin", Content = "🟣 Everyone spinning!", Duration = 3})
+        end
+    })
+    
+    TrollTab:AddButton({
+        Title = "❄️ Freeze All",
+        Callback = function()
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Character then
+                    local r = p.Character:FindFirstChild("HumanoidRootPart")
+                    if r then
+                        r.Anchored = true
+                        task.delay(6, function()
+                            if r then r.Anchored = false end
+                        end)
+                    end
+                end
+            end
+            Fluent:Notify({Title = "Freeze", Content = "🟣 Everyone frozen!", Duration = 3})
+        end
+    })
+    
+    -- Atualiza dropdown
+    spawn(function()
+        while wait(5) do
+            playerList = {}
+            for _, p in pairs(Players:GetPlayers()) do
+                if p ~= LocalPlayer then table.insert(playerList, p.Name) end
+            end
+            dropdown:Refresh(playerList)
+        end
+    end)
+    
+    Fluent:Notify({
+        Title = "Troll Tab Unlocked!",
+        Content = "🟣 All troll functions available!",
+        Duration = 5
+    })
+end)
+
+-- Anti-Troll Protection
+RunService.Heartbeat:Connect(function()
+    local r = GetRoot()
+    if r then
+        for _, obj in pairs(r:GetChildren()) do
+            if obj:IsA("BodyAngularVelocity") then
+                obj:Destroy()
+            end
+        end
+        if r.Anchored and not FlyEnabled then
+            r.Anchored = false
+        end
+    end
+end)
+
+print("╔═══════════════════════════════╗")
+print("║ UNDERGROUND HUB 2.0 LOADED! ║")
+print("║ By Vex | Fluent UI          ║")
+print("║ Anti-Cheat Bypass: Active   ║")
+print("║ PC: RightCtrl | Mobile: 🟣  ║")
+print("╚═══════════════════════════════╝")
+
+Fluent:Notify({
+    Title = "Underground Hub 2.0 Ready!",
+    Content = "🟣 PC: RightCtrl to open/close\n📱 Mobile: Purple button to toggle\n✅ Anti-Cheat bypassed!\n👻 Secret commands hidden",
+    Duration = 7
+})
