@@ -1,0 +1,625 @@
+-- KILLER EXECUTOR V1.0
+-- Executor Premium com Animações e Análise de Backdoors
+
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local HttpService = game:GetService("HttpService")
+
+-- Tempo de sessão
+local SessionStart = tick()
+
+-- Criar ScreenGui
+local KillerExecutor = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local MainGradient = Instance.new("UIGradient")
+local TopBar = Instance.new("Frame")
+local TopGradient = Instance.new("UIGradient")
+local Logo = Instance.new("TextLabel")
+local CloseBtn = Instance.new("TextButton")
+local MinimizeBtn = Instance.new("TextButton")
+
+-- Painel de Perfil (Direita)
+local ProfilePanel = Instance.new("Frame")
+local ProfileGradient = Instance.new("UIGradient")
+local ProfileImage = Instance.new("ImageLabel")
+local PlayerNameLabel = Instance.new("TextLabel")
+local PlayerIDLabel = Instance.new("TextLabel")
+local SessionTimeLabel = Instance.new("TextLabel")
+local ProfileTitle = Instance.new("TextLabel")
+
+-- Botão Toggle (Seta)
+local ToggleButton = Instance.new("TextButton")
+
+-- Script Box
+local ScriptBox = Instance.new("TextBox")
+local ScriptBoxGradient = Instance.new("UIGradient")
+
+-- Botões
+local ExecuteBtn = Instance.new("TextButton")
+local ExecuteGradient = Instance.new("UIGradient")
+local ClearBtn = Instance.new("TextButton")
+local ClearGradient = Instance.new("UIGradient")
+local AnalyzeBtn = Instance.new("TextButton")
+local AnalyzeGradient = Instance.new("UIGradient")
+
+-- Status
+local BackdoorStatus = Instance.new("Frame")
+local StatusGradient = Instance.new("UIGradient")
+local StatusLabel = Instance.new("TextLabel")
+local StatusIndicator = Instance.new("Frame")
+
+-- Configurações do ScreenGui
+KillerExecutor.Name = "KillerExecutor"
+KillerExecutor.Parent = game.CoreGui
+KillerExecutor.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+KillerExecutor.ResetOnSpawn = false
+
+-- Frame Principal
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = KillerExecutor
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+MainFrame.Size = UDim2.new(0, 800, 0, 500)
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 15)
+MainCorner.Parent = MainFrame
+
+-- Gradiente animado principal
+MainGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 60)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 25)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 10))
+}
+MainGradient.Rotation = 0
+MainGradient.Parent = MainFrame
+
+-- Barra Superior
+TopBar.Name = "TopBar"
+TopBar.Parent = MainFrame
+TopBar.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+TopBar.BorderSizePixel = 0
+TopBar.Size = UDim2.new(1, 0, 0, 50)
+
+local TopCorner = Instance.new("UICorner")
+TopCorner.CornerRadius = UDim.new(0, 15)
+TopCorner.Parent = TopBar
+
+TopGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 50)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
+}
+TopGradient.Rotation = 90
+TopGradient.Parent = TopBar
+
+-- Logo
+Logo.Name = "Logo"
+Logo.Parent = TopBar
+Logo.BackgroundTransparency = 1
+Logo.Position = UDim2.new(0, 20, 0, 0)
+Logo.Size = UDim2.new(0, 300, 1, 0)
+Logo.Font = Enum.Font.GothamBold
+Logo.Text = "⚔️ KILLER EXECUTOR"
+Logo.TextColor3 = Color3.fromRGB(255, 255, 255)
+Logo.TextSize = 22
+Logo.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Botão Fechar
+CloseBtn.Name = "CloseBtn"
+CloseBtn.Parent = TopBar
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+CloseBtn.BorderSizePixel = 0
+CloseBtn.Position = UDim2.new(1, -40, 0, 10)
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "✕"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 18
+
+local CloseBtnCorner = Instance.new("UICorner")
+CloseBtnCorner.CornerRadius = UDim.new(1, 0)
+CloseBtnCorner.Parent = CloseBtn
+
+-- Botão Minimizar
+MinimizeBtn.Name = "MinimizeBtn"
+MinimizeBtn.Parent = TopBar
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(150, 150, 40)
+MinimizeBtn.BorderSizePixel = 0
+MinimizeBtn.Position = UDim2.new(1, -75, 0, 10)
+MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+MinimizeBtn.Font = Enum.Font.GothamBold
+MinimizeBtn.Text = "−"
+MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeBtn.TextSize = 18
+
+local MinimizeBtnCorner = Instance.new("UICorner")
+MinimizeBtnCorner.CornerRadius = UDim.new(1, 0)
+MinimizeBtnCorner.Parent = MinimizeBtn
+
+-- Painel de Perfil (Direita)
+ProfilePanel.Name = "ProfilePanel"
+ProfilePanel.Parent = MainFrame
+ProfilePanel.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+ProfilePanel.BorderSizePixel = 0
+ProfilePanel.Position = UDim2.new(1, 0, 0, 50)
+ProfilePanel.Size = UDim2.new(0, 250, 1, -50)
+
+local ProfileCorner = Instance.new("UICorner")
+ProfileCorner.CornerRadius = UDim.new(0, 15)
+ProfileCorner.Parent = ProfilePanel
+
+ProfileGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(45, 45, 45)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
+}
+ProfileGradient.Rotation = 180
+ProfileGradient.Parent = ProfilePanel
+
+-- Título do Perfil
+ProfileTitle.Name = "ProfileTitle"
+ProfileTitle.Parent = ProfilePanel
+ProfileTitle.BackgroundTransparency = 1
+ProfileTitle.Position = UDim2.new(0, 0, 0, 10)
+ProfileTitle.Size = UDim2.new(1, 0, 0, 30)
+ProfileTitle.Font = Enum.Font.GothamBold
+ProfileTitle.Text = "👤 PERFIL"
+ProfileTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+ProfileTitle.TextSize = 16
+
+-- Imagem de Perfil
+ProfileImage.Name = "ProfileImage"
+ProfileImage.Parent = ProfilePanel
+ProfileImage.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ProfileImage.BorderSizePixel = 0
+ProfileImage.Position = UDim2.new(0.5, -60, 0, 50)
+ProfileImage.Size = UDim2.new(0, 120, 0, 120)
+ProfileImage.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+
+local ProfileImageCorner = Instance.new("UICorner")
+ProfileImageCorner.CornerRadius = UDim.new(1, 0)
+ProfileImageCorner.Parent = ProfileImage
+
+-- Borda da Imagem
+local ImageBorder = Instance.new("UIStroke")
+ImageBorder.Color = Color3.fromRGB(150, 150, 150)
+ImageBorder.Thickness = 3
+ImageBorder.Parent = ProfileImage
+
+-- Nome do Player
+PlayerNameLabel.Name = "PlayerNameLabel"
+PlayerNameLabel.Parent = ProfilePanel
+PlayerNameLabel.BackgroundTransparency = 1
+PlayerNameLabel.Position = UDim2.new(0, 10, 0, 180)
+PlayerNameLabel.Size = UDim2.new(1, -20, 0, 25)
+PlayerNameLabel.Font = Enum.Font.GothamBold
+PlayerNameLabel.Text = "👤 " .. LocalPlayer.Name
+PlayerNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayerNameLabel.TextSize = 16
+PlayerNameLabel.TextWrapped = true
+
+-- ID do Player
+PlayerIDLabel.Name = "PlayerIDLabel"
+PlayerIDLabel.Parent = ProfilePanel
+PlayerIDLabel.BackgroundTransparency = 1
+PlayerIDLabel.Position = UDim2.new(0, 10, 0, 210)
+PlayerIDLabel.Size = UDim2.new(1, -20, 0, 25)
+PlayerIDLabel.Font = Enum.Font.Gotham
+PlayerIDLabel.Text = "🆔 ID: " .. LocalPlayer.UserId
+PlayerIDLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+PlayerIDLabel.TextSize = 14
+
+-- Tempo de Sessão
+SessionTimeLabel.Name = "SessionTimeLabel"
+SessionTimeLabel.Parent = ProfilePanel
+SessionTimeLabel.BackgroundTransparency = 1
+SessionTimeLabel.Position = UDim2.new(0, 10, 0, 240)
+SessionTimeLabel.Size = UDim2.new(1, -20, 0, 25)
+SessionTimeLabel.Font = Enum.Font.Gotham
+SessionTimeLabel.Text = "⏱️ Sessão: 00:00:00"
+SessionTimeLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+SessionTimeLabel.TextSize = 14
+
+-- Botão Toggle (Seta)
+ToggleButton.Name = "ToggleButton"
+ToggleButton.Parent = MainFrame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(1, -30, 0, 250)
+ToggleButton.Size = UDim2.new(0, 30, 0, 60)
+ToggleButton.Font = Enum.Font.GothamBold
+ToggleButton.Text = "◀"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.TextSize = 20
+
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(0, 10)
+ToggleCorner.Parent = ToggleButton
+
+-- Caixa de Script
+ScriptBox.Name = "ScriptBox"
+ScriptBox.Parent = MainFrame
+ScriptBox.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+ScriptBox.BorderSizePixel = 0
+ScriptBox.Position = UDim2.new(0, 20, 0, 70)
+ScriptBox.Size = UDim2.new(1, -40, 0, 300)
+ScriptBox.ClearTextOnFocus = false
+ScriptBox.Font = Enum.Font.Code
+ScriptBox.MultiLine = true
+ScriptBox.PlaceholderText = "-- Cole seu script aqui para análise de backdoors..."
+ScriptBox.Text = ""
+ScriptBox.TextColor3 = Color3.fromRGB(200, 200, 200)
+ScriptBox.TextSize = 14
+ScriptBox.TextXAlignment = Enum.TextXAlignment.Left
+ScriptBox.TextYAlignment = Enum.TextYAlignment.Top
+
+local ScriptBoxCorner = Instance.new("UICorner")
+ScriptBoxCorner.CornerRadius = UDim.new(0, 10)
+ScriptBoxCorner.Parent = ScriptBox
+
+ScriptBoxGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 30, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 15))
+}
+ScriptBoxGradient.Rotation = 90
+ScriptBoxGradient.Parent = ScriptBox
+
+-- Status de Backdoor
+BackdoorStatus.Name = "BackdoorStatus"
+BackdoorStatus.Parent = MainFrame
+BackdoorStatus.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+BackdoorStatus.BorderSizePixel = 0
+BackdoorStatus.Position = UDim2.new(0, 20, 0, 380)
+BackdoorStatus.Size = UDim2.new(1, -40, 0, 35)
+
+local StatusCorner = Instance.new("UICorner")
+StatusCorner.CornerRadius = UDim.new(0, 8)
+StatusCorner.Parent = BackdoorStatus
+
+StatusGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
+}
+StatusGradient.Rotation = 90
+StatusGradient.Parent = BackdoorStatus
+
+StatusLabel.Name = "StatusLabel"
+StatusLabel.Parent = BackdoorStatus
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Position = UDim2.new(0, 40, 0, 0)
+StatusLabel.Size = UDim2.new(1, -50, 1, 0)
+StatusLabel.Font = Enum.Font.GothamBold
+StatusLabel.Text = "Aguardando análise..."
+StatusLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+StatusLabel.TextSize = 14
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+StatusIndicator.Name = "StatusIndicator"
+StatusIndicator.Parent = BackdoorStatus
+StatusIndicator.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+StatusIndicator.BorderSizePixel = 0
+StatusIndicator.Position = UDim2.new(0, 10, 0.5, -8)
+StatusIndicator.Size = UDim2.new(0, 16, 0, 16)
+
+local IndicatorCorner = Instance.new("UICorner")
+IndicatorCorner.CornerRadius = UDim.new(1, 0)
+IndicatorCorner.Parent = StatusIndicator
+
+-- Botão Executar
+ExecuteBtn.Name = "ExecuteBtn"
+ExecuteBtn.Parent = MainFrame
+ExecuteBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ExecuteBtn.BorderSizePixel = 0
+ExecuteBtn.Position = UDim2.new(0, 20, 1, -50)
+ExecuteBtn.Size = UDim2.new(0.3, -15, 0, 40)
+ExecuteBtn.Font = Enum.Font.GothamBold
+ExecuteBtn.Text = "▶ EXECUTAR"
+ExecuteBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExecuteBtn.TextSize = 14
+
+local ExecuteCorner = Instance.new("UICorner")
+ExecuteCorner.CornerRadius = UDim.new(0, 10)
+ExecuteCorner.Parent = ExecuteBtn
+
+ExecuteGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 200, 80)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 150, 40))
+}
+ExecuteGradient.Rotation = 90
+ExecuteGradient.Parent = ExecuteBtn
+
+-- Botão Analisar
+AnalyzeBtn.Name = "AnalyzeBtn"
+AnalyzeBtn.Parent = MainFrame
+AnalyzeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+AnalyzeBtn.BorderSizePixel = 0
+AnalyzeBtn.Position = UDim2.new(0.35, 0, 1, -50)
+AnalyzeBtn.Size = UDim2.new(0.3, -10, 0, 40)
+AnalyzeBtn.Font = Enum.Font.GothamBold
+AnalyzeBtn.Text = "🔍 ANALISAR"
+AnalyzeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AnalyzeBtn.TextSize = 14
+
+local AnalyzeCorner = Instance.new("UICorner")
+AnalyzeCorner.CornerRadius = UDim.new(0, 10)
+AnalyzeCorner.Parent = AnalyzeBtn
+
+AnalyzeGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(80, 150, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 100, 200))
+}
+AnalyzeGradient.Rotation = 90
+AnalyzeGradient.Parent = AnalyzeBtn
+
+-- Botão Limpar
+ClearBtn.Name = "ClearBtn"
+ClearBtn.Parent = MainFrame
+ClearBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ClearBtn.BorderSizePixel = 0
+ClearBtn.Position = UDim2.new(0.7, 5, 1, -50)
+ClearBtn.Size = UDim2.new(0.3, -25, 0, 40)
+ClearBtn.Font = Enum.Font.GothamBold
+ClearBtn.Text = "🗑️ LIMPAR"
+ClearBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearBtn.TextSize = 14
+
+local ClearCorner = Instance.new("UICorner")
+ClearCorner.CornerRadius = UDim.new(0, 10)
+ClearCorner.Parent = ClearBtn
+
+ClearGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 80, 80)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(150, 40, 40))
+}
+ClearGradient.Rotation = 90
+ClearGradient.Parent = ClearBtn
+
+-- FUNÇÕES
+
+-- Função de notificação
+local function notify(title, text, duration)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title;
+        Text = text;
+        Duration = duration or 3;
+    })
+end
+
+-- Animação de gradiente rotativo
+spawn(function()
+    while wait(0.05) do
+        MainGradient.Rotation = (MainGradient.Rotation + 1) % 360
+    end
+end)
+
+-- Atualizar tempo de sessão
+spawn(function()
+    while wait(1) do
+        local elapsed = tick() - SessionStart
+        local hours = math.floor(elapsed / 3600)
+        local minutes = math.floor((elapsed % 3600) / 60)
+        local seconds = math.floor(elapsed % 60)
+        SessionTimeLabel.Text = string.format("⏱️ Sessão: %02d:%02d:%02d", hours, minutes, seconds)
+    end
+end)
+
+-- Função para animar botões
+local function animateButton(button, scale)
+    local tween = TweenService:Create(button, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = button.Size + UDim2.new(0, scale, 0, scale)
+    })
+    tween:Play()
+    wait(0.2)
+    local tween2 = TweenService:Create(button, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = button.Size - UDim2.new(0, scale, 0, scale)
+    })
+    tween2:Play()
+end
+
+-- Função de análise de backdoors
+local function analyzeBackdoors(script)
+    local backdoorPatterns = {
+        "require%(%d+%)",
+        "loadstring",
+        "getfenv",
+        "setfenv",
+        "HttpGet",
+        "HttpPost",
+        "game%.HttpGet",
+        "game:HttpGet",
+        "game:GetObjects",
+        "InsertService",
+        "MarketplaceService:GetProductInfo",
+        "_G%.",
+        "shared%."
+    }
+    
+    local foundBackdoors = {}
+    
+    for _, pattern in ipairs(backdoorPatterns) do
+        if string.find(script:lower(), pattern:lower()) then
+            table.insert(foundBackdoors, pattern)
+        end
+    end
+    
+    return foundBackdoors
+end
+
+-- Função para atualizar status
+local function updateStatus(text, color)
+    StatusLabel.Text = text
+    StatusIndicator.BackgroundColor3 = color
+    
+    local tween = TweenService:Create(StatusIndicator, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = UDim2.new(0, 20, 0, 20)
+    })
+    tween:Play()
+    wait(0.5)
+    local tween2 = TweenService:Create(StatusIndicator, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = UDim2.new(0, 16, 0, 16)
+    })
+    tween2:Play()
+end
+
+-- Botão Analisar
+AnalyzeBtn.MouseButton1Click:Connect(function()
+    animateButton(AnalyzeBtn, 5)
+    
+    local script = ScriptBox.Text
+    if script == "" then
+        updateStatus("❌ Nenhum script para analisar!", Color3.fromRGB(200, 50, 50))
+        notify("⚠️ AVISO", "Cole um script primeiro!", 3)
+        return
+    end
+    
+    updateStatus("🔍 Analisando backdoors...", Color3.fromRGB(255, 200, 50))
+    wait(1.5)
+    
+    local backdoors = analyzeBackdoors(script)
+    
+    if #backdoors > 0 then
+        updateStatus("⚠️ " .. #backdoors .. " backdoor(s) detectado(s)!", Color3.fromRGB(255, 150, 50))
+        notify("🔍 ANÁLISE", "Encontrados " .. #backdoors .. " backdoors potenciais!", 5)
+        
+        local backdoorList = "Backdoors encontrados:\n"
+        for i, bd in ipairs(backdoors) do
+            backdoorList = backdoorList .. i .. ". " .. bd .. "\n"
+        end
+        print(backdoorList)
+    else
+        updateStatus("✅ Nenhum backdoor detectado!", Color3.fromRGB(50, 200, 50))
+        notify("✅ SEGURO", "Script não contém backdoors conhecidos!", 4)
+    end
+end)
+
+-- Botão Executar
+ExecuteBtn.MouseButton1Click:Connect(function()
+    animateButton(ExecuteBtn, 5)
+    
+    local script = ScriptBox.Text
+    if script == "" then
+        updateStatus("❌ Nenhum script para executar!", Color3.fromRGB(200, 50, 50))
+        notify("⚠️ AVISO", "Cole um script primeiro!", 3)
+        return
+    end
+    
+    -- Primeiro analisa
+    local backdoors = analyzeBackdoors(script)
+    
+    if #backdoors > 0 then
+        updateStatus("⚠️ Executando com backdoors...", Color3.fromRGB(255, 150, 50))
+        notify("⚠️ ATENÇÃO", "Script contém backdoors! Executando mesmo assim...", 4)
+    else
+        updateStatus("▶ Executando script...", Color3.fromRGB(50, 200, 50))
+    end
+    
+    wait(0.5)
+    
+    local success, error = pcall(function()
+        loadstring(script)()
+    end)
+    
+    if success then
+        updateStatus("✅ Script executado com sucesso!", Color3.fromRGB(50, 200, 50))
+        notify("✅ SUCESSO", "Script executado!", 3)
+    else
+        updateStatus("❌ Erro na execução!", Color3.fromRGB(200, 50, 50))
+        notify("❌ ERRO", tostring(error), 5)
+    end
+end)
+
+-- Botão Limpar
+ClearBtn.MouseButton1Click:Connect(function()
+    animateButton(ClearBtn, 5)
+    ScriptBox.Text = ""
+    updateStatus("🗑️ Script limpo!", Color3.fromRGB(150, 150, 150))
+    notify("🗑️ LIMPO", "Caixa de script limpa!", 2)
+end)
+
+-- Botão Fechar
+CloseBtn.MouseButton1Click:Connect(function()
+    local tween = TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+        Size = UDim2.new(0, 0, 0, 0)
+    })
+    tween:Play()
+    wait(0.5)
+    KillerExecutor:Destroy()
+end)
+
+-- Botão Minimizar
+local minimized = false
+MinimizeBtn.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    local targetSize = minimized and UDim2.new(0, 800, 0, 50) or UDim2.new(0, 800, 0, 500)
+    local tween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = targetSize
+    })
+    tween:Play()
+end)
+
+-- Toggle do Painel de Perfil
+local profileOpen = false
+ToggleButton.MouseButton1Click:Connect(function()
+    profileOpen = not profileOpen
+    
+    local targetPos = profileOpen and UDim2.new(1, -250, 0, 50) or UDim2.new(1, 0, 0, 50)
+    local buttonText = profileOpen and "▶" or "◀"
+    
+    local tween = TweenService:Create(ProfilePanel, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Position = targetPos
+    })
+    tween:Play()
+    
+    ToggleButton.Text = buttonText
+end)
+
+-- Efeitos de hover
+local function addHoverEffect(button)
+    button.MouseEnter:Connect(function()
+        local tween = TweenService:Create(button, TweenInfo.new(0.2), {
+            BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        })
+        tween:Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        local tween = TweenService:Create(button, TweenInfo.new(0.2), {
+            BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        })
+        tween:Play()
+    end)
+end
+
+addHoverEffect(ExecuteBtn)
+addHoverEffect(AnalyzeBtn)
+addHoverEffect(ClearBtn)
+addHoverEffect(ToggleButton)
+
+-- Animação de entrada
+MainFrame.Size = UDim2.new(0, 0, 0, 0)
+local openTween = TweenService:Create(MainFrame, TweenInfo.new(0.7, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+    Size = UDim2.new(0, 800, 0, 500)
+})
+openTween:Play()
+
+-- Animação pulsante no Logo
+spawn(function()
+    while wait(2) do
+        local tween = TweenService:Create(Logo, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+            TextSize = 24
+        })
+        tween:Play()
+        wait(0.5)
+        local tween2 = TweenService:Create(Logo, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+            TextSize = 22
+        })
+        tween2:Play()
+    end
+end)
+
+-- Notificação de inicialização
+notify("⚔️ KILLER EXECUTOR", "Executor carregado com sucesso!", 4)
+updateStatus("✅ Pronto para uso!", Color3.fromRGB(50, 200, 50))
