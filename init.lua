@@ -11,7 +11,6 @@ VexUI.Windows = {}
 
 function VexUI:CreateWindow(options)
     options = options or {}
-
     local window = WindowClass:Create(self, {
         Theme = Theme:Create(options.Theme),
         Config = Config:Merge(options)
