@@ -1,0 +1,428 @@
+--[[
+  ╔═══════════════════════════════════╗
+  ║  ☠️ SKULLCRYPT OBFUSCATOR ☠️     ║
+  ║  Protected Code - Do Not Edit    ║
+  ║  Level: 100%                      ║
+  ╚═══════════════════════════════════╝
+]]
+
+-- ☠️ Protected by SkullCrypt v2.0 ☠️
+local _=PLmJTyT0c1;if(debug)then debug=nil end;
+-- Jump Hub Brainrot | by vex-scripterYT ❤️
+-- Executor Script (Synapse X, KRNL, Fluxus, etc.)
+
+local _kMsyu4MfPz8mo2S = (_kMsyu4MfPz8mo2S or clonereference or function(i) return i end)
+local _sX4kxbo2Cud6kAn      = _kMsyu4MfPz8mo2S(game:GetService((string.char(95,115,88,52,107,120,98,111,50,67,117,100,54,107,65,110))))
+local _Pe7zXLZ5vH7R5am9w7   = _kMsyu4MfPz8mo2S(game:GetService((string.char(95,80,101,55,122,88,76,90,53,118,72,55,82,53,97,109,57,119,55))))
+local _yuM1G1pN2dvA5LXf = _kMsyu4MfPz8mo2S(game:GetService((string.char(95,121,117,77,49,71,49,112,78,50,100,118,65,53,76,88,102))))
+
+do local _gpHr4RT9l6_W5L7t4b7    = _sX4kxbo2Cud6kAn.LocalPlayer end
+do local _yf8Tufc7J0OgNU4D1 = _gpHr4RT9l6_W5L7t4b7.Character or _gpHr4RT9l6_W5L7t4b7.CharacterAdded:Wait() end
+local _ed6vnhd0Dvs7SW6x       = _yf8Tufc7J0OgNU4D1:WaitForChild((string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116)))
+do local _tces1W1kIl7J1N1b7T1  = _yf8Tufc7J0OgNU4D1:WaitForChild((string.char(72,117,109,97,110,111,105,100))) end
+
+-- ══════════════════════════════════════════════════════════
+--                    LOAD WINDUI
+-- ══════════════════════════════════════════════════════════
+
+do local _zHKyb5jsQ8KO2tK4 = loadstring(game:HttpGet( end
+    (string.char(104,116,116,112,115,58,47,47,114,97,119,46,103,105,116,104,117,98,117,115,101,114,99,111,110,116,101,110,116,46,99,111,109,47,70,111,111,116,97,103,101,115,117,115,47,95,122,72,75,121,98,53,106,115,81,56,75,79,50,116,75,52,47,109,97,105,110,47,100,105,115,116,47,109,97,105,110,46,108,117,97))
+))()
+
+-- ══════════════════════════════════════════════════════════
+--                    STATES
+-- ══════════════════════════════════════════════════════════
+
+local _AsjRVGtub5B7jF8    = false
+local _qNFqtx2r5U7e2T_8u     = false
+local _KXOc9KKm2Q4Ff6l2X7       = false
+do local _RKc8t0MdmHQU5Pb     = false end
+do local _Kufn4ES1K5S3Ef1O_7      = false end
+local _RE9PX2vZsCYh5c7U7     = 10
+do local _Ux9yg5CbSr8G5PYd       = nil end
+local _BzUYN4DZR8E4_6K3F         = nil
+do local _vZc5A7T6a7x6U8FjIU = nil end
+
+-- Noclip raycast
+do local _Xf9WzmX3kJwY9Q1i  = Vector3.new(0, -2.5, 0) end
+do local _PVq7ksU0Io3d3S3ny = RaycastParams.new() end
+_PVq7ksU0Io3d3S3ny.FilterDescendantsInstances = {_yf8Tufc7J0OgNU4D1}
+_PVq7ksU0Io3d3S3ny.FilterType = Enum.RaycastFilterType.Exclude
+
+-- ══════════════════════════════════════════════════════════
+--                    CHAR REFRESH
+-- ══════════════════════════════════════════════════════════
+
+local function _Vh0NN0ix9x9c9YnK8L(newChar)
+    _yf8Tufc7J0OgNU4D1  = newChar
+    _ed6vnhd0Dvs7SW6x        = newChar:WaitForChild((string.char(72,117,109,97,110,111,105,100,82,111,111,116,80,97,114,116)))
+    _tces1W1kIl7J1N1b7T1   = newChar:WaitForChild((string.char(72,117,109,97,110,111,105,100)))
+    _PVq7ksU0Io3d3S3ny.FilterDescendantsInstances = {newChar}
+    _qNFqtx2r5U7e2T_8u  = false
+    _AsjRVGtub5B7jF8 = false
+    -- Reconecta anti knockback se estava ativo
+    if _RKc8t0MdmHQU5Pb then
+        _ucz4me9sGe5ea1YR(true)
+    end
+end
+
+_gpHr4RT9l6_W5L7t4b7.CharacterAdded:Connect(_Vh0NN0ix9x9c9YnK8L)
+
+-- ══════════════════════════════════════════════════════════
+--                    NOCLIP LOOP
+-- ══════════════════════════════════════════════════════════
+
+_Pe7zXLZ5vH7R5am9w7.Stepped:Connect(function()
+    if not _qNFqtx2r5U7e2T_8u or not _yf8Tufc7J0OgNU4D1 or not _ed6vnhd0Dvs7SW6x then return end
+    for _, part in ipairs(_yf8Tufc7J0OgNU4D1:GetDescendants()) do
+        if part:IsA((string.char(66,97,115,101,80,97,114,116))) then
+            local _lt8PPN1I1qFvy9D8C = part.Position + Vector3.new(0, -(part.Size.Y / 2), 0)
+            local _Yv7k7iM0UG8l4QhJI0 = workspace:Raycast(_lt8PPN1I1qFvy9D8C, _Xf9WzmX3kJwY9Q1i, _PVq7ksU0Io3d3S3ny)
+            part.CanCollide = _Yv7k7iM0UG8l4QhJI0 ~= nil
+        end
+    end
+end)
+
+local function _RGm_5Kv9OC7cJ8JC()
+    for _, part in ipairs(_yf8Tufc7J0OgNU4D1:GetDescendants()) do
+        if part:IsA((string.char(66,97,115,101,80,97,114,116))) then
+            part.CanCollide = true
+        end
+    end
+end
+
+-- ══════════════════════════════════════════════════════════
+--                    GOD MODE
+-- ══════════════════════════════════════════════════════════
+
+local function _IsN6y7RdIz7PgzD(state)
+    _AsjRVGtub5B7jF8 = state
+    if _Ux9yg5CbSr8G5PYd then _Ux9yg5CbSr8G5PYd:Disconnect() _Ux9yg5CbSr8G5PYd = nil end
+
+    if state then
+        if _tces1W1kIl7J1N1b7T1 then
+            _tces1W1kIl7J1N1b7T1.MaxHealth = math.huge
+            _tces1W1kIl7J1N1b7T1.Health    = math.huge
+        end
+        _Ux9yg5CbSr8G5PYd = _Pe7zXLZ5vH7R5am9w7.Heartbeat:Connect(function()
+            if _tces1W1kIl7J1N1b7T1 then
+                _tces1W1kIl7J1N1b7T1.Health    = math.huge
+                _tces1W1kIl7J1N1b7T1.MaxHealth = math.huge
+            end
+        end)
+    end
+end
+
+-- ══════════════════════════════════════════════════════════
+--                    ANTI RAGDOLL
+-- ══════════════════════════════════════════════════════════
+
+local function _Bcqs2zC9Dr4PKX4b(state)
+    _KXOc9KKm2Q4Ff6l2X7 = state
+    if state then
+        for _, v in ipairs(_yf8Tufc7J0OgNU4D1:GetDescendants()) do
+            if v:IsA((string.char(66,97,108,108,83,111,99,107,101,116,67,111,110,115,116,114,97,105,110,116))) or v:IsA((string.char(72,105,110,103,101,67,111,110,115,116,114,97,105,110,116))) then
+                v.Enabled = false
+            end
+        end
+        if _tces1W1kIl7J1N1b7T1 then
+            _tces1W1kIl7J1N1b7T1:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
+            _tces1W1kIl7J1N1b7T1:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
+        end
+    else
+        for _, v in ipairs(_yf8Tufc7J0OgNU4D1:GetDescendants()) do
+            if v:IsA((string.char(66,97,108,108,83,111,99,107,101,116,67,111,110,115,116,114,97,105,110,116))) or v:IsA((string.char(72,105,110,103,101,67,111,110,115,116,114,97,105,110,116))) then
+                v.Enabled = true
+            end
+        end
+        if _tces1W1kIl7J1N1b7T1 then
+            _tces1W1kIl7J1N1b7T1:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, true)
+            _tces1W1kIl7J1N1b7T1:SetStateEnabled(Enum.HumanoidStateType.FallingDown, true)
+        end
+    end
+end
+
+-- ══════════════════════════════════════════════════════════
+--                    ANTI LANÇAMENTO (KNOCKBACK)
+-- ══════════════════════════════════════════════════════════
+
+local function _ucz4me9sGe5ea1YR(state)
+    _RKc8t0MdmHQU5Pb = state
+
+    if _vZc5A7T6a7x6U8FjIU then
+        _vZc5A7T6a7x6U8FjIU:Disconnect()
+        _vZc5A7T6a7x6U8FjIU = nil
+    end
+
+    if state then
+        _vZc5A7T6a7x6U8FjIU = _Pe7zXLZ5vH7R5am9w7.Heartbeat:Connect(function()
+            if not _ed6vnhd0Dvs7SW6x then return end
+
+            -- Zera a velocidade lateral e vertical que não seja do pulo natural
+            local _qR3H6O4oRV6uvjfr = _ed6vnhd0Dvs7SW6x.AssemblyLinearVelocity
+            local _zX4_r9uGSJ9e6i0t1f = 0
+            local _xK7lK5id9lh1A5IDP5 = 0
+            -- Preserva Y positivo (pulo/gravidade normal), só zera se for lançamento externo
+            -- Considera (string.char(108,97,110,231,97,109,101,110,116,111)) qualquer velocidade horizontal acima de 1 stud/s
+            if math.abs(_qR3H6O4oRV6uvjfr.X) > 1 then _zX4_r9uGSJ9e6i0t1f = _qR3H6O4oRV6uvjfr.X * 0.05 end
+            if math.abs(_qR3H6O4oRV6uvjfr.Z) > 1 then _xK7lK5id9lh1A5IDP5 = _qR3H6O4oRV6uvjfr.Z * 0.05 end
+
+            _ed6vnhd0Dvs7SW6x.AssemblyLinearVelocity = Vector3.new(_zX4_r9uGSJ9e6i0t1f, _qR3H6O4oRV6uvjfr.Y, _xK7lK5id9lh1A5IDP5)
+        end)
+    end
+end
+
+
+
+local function _XkNm4iY4I8uxl8p0j6(state, dist)
+    _Kufn4ES1K5S3Ef1O_7  = state
+    _RE9PX2vZsCYh5c7U7 = dist or _RE9PX2vZsCYh5c7U7
+
+    if _BzUYN4DZR8E4_6K3F then _BzUYN4DZR8E4_6K3F:Disconnect() _BzUYN4DZR8E4_6K3F = nil end
+
+    if state then
+        _BzUYN4DZR8E4_6K3F = _Pe7zXLZ5vH7R5am9w7.Heartbeat:Connect(function()
+            local _En1S4U6Y6x7R8xIXSp4 = _yf8Tufc7J0OgNU4D1:FindFirstChildOfClass((string.char(84,111,111,108)))
+            if _En1S4U6Y6x7R8xIXSp4 then
+                local _ldT4C9R1e0iq4F9lD0O = _En1S4U6Y6x7R8xIXSp4:FindFirstChild((string.char(72,97,110,100,108,101)))
+                if _ldT4C9R1e0iq4F9lD0O then
+                    _ldT4C9R1e0iq4F9lD0O.Size = Vector3.new(_RE9PX2vZsCYh5c7U7, _RE9PX2vZsCYh5c7U7, _RE9PX2vZsCYh5c7U7)
+                end
+            end
+        end)
+    else
+        local _En1S4U6Y6x7R8xIXSp4 = _yf8Tufc7J0OgNU4D1:FindFirstChildOfClass((string.char(84,111,111,108)))
+        if _En1S4U6Y6x7R8xIXSp4 then
+            local _ldT4C9R1e0iq4F9lD0O = _En1S4U6Y6x7R8xIXSp4:FindFirstChild((string.char(72,97,110,100,108,101)))
+            if _ldT4C9R1e0iq4F9lD0O then
+                _ldT4C9R1e0iq4F9lD0O.Size = Vector3.new(1, 1, 1)
+            end
+        end
+    end
+end
+
+-- ══════════════════════════════════════════════════════════
+--                    CREATE WINDOW
+-- ══════════════════════════════════════════════════════════
+
+local _bT2E4pHk2m3f4B1A8II3 = _zHKyb5jsQ8KO2tK4:CreateWindow({
+    Title  = (string.char(74,117,109,112,32,72,117,98,32,66,114,97,105,110,114,111,116,32,32,124,32,32,98,121,32,118,101,120,45,115,99,114,105,112,116,101,114,89,84,32,10084,65039)),
+    Folder = (string.char(74,117,109,112,72,117,98,66,114,97,105,110,114,111,116)),
+    Icon   = (string.char(115,111,108,97,114,58,115,116,97,114,45,98,111,108,100,45,100,117,111,116,111,110,101)),
+    NewElements = true,
+    HideSearchBar = false,
+
+    OpenButton = {
+        Title    = (string.char(74,117,109,112,32,72,117,98)),
+        CornerRadius  = UDim.new(1, 0),
+        StrokeThickness = 2,
+        Enabled  = true,
+        Draggable = true,
+        OnlyMobile = false,
+        Scale    = 0.55,
+        Color    = ColorSequence.new(
+            Color3.fromHex((string.char(35,102,102,54,102,100,56))),
+            Color3.fromHex((string.char(35,51,56,49,51,99,50)))
+        ),
+    },
+    Topbar = {
+        Height = 44,
+        ButtonsType = (string.char(77,97,99)),
+    },
+})
+
+-- Tag do hub
+_bT2E4pHk2m3f4B1A8II3:Tag({
+    Title = (string.char(98,121,32,118,101,120,45,115,99,114,105,112,116,101,114,89,84,32,10084,65039)),
+    Icon  = (string.char(104,101,97,114,116)),
+    Color = Color3.fromHex((string.char(35,102,102,52,100,97,54))),
+    Border = true,
+})
+
+-- ══════════════════════════════════════════════════════════
+--                    TAB: TELEPORT
+-- ══════════════════════════════════════════════════════════
+
+local _Gy9I8d7HVMJy7edV = _bT2E4pHk2m3f4B1A8II3:Tab({
+    Title    = (string.char(84,101,108,101,112,111,114,116,101)),
+    Icon     = (string.char(115,111,108,97,114,58,109,97,112,45,112,111,105,110,116,45,98,111,108,100,45,100,117,111,116,111,110,101)),
+    IconColor = Color3.fromHex((string.char(35,51,98,56,50,102,54))),
+    IconShape = (string.char(83,113,117,97,114,101)),
+    Border   = true,
+})
+
+_Gy9I8d7HVMJy7edV:Section({ Title = (string.char(76,111,99,97,105,115,32,82,225,112,105,100,111,115)) })
+
+-- Teleporte to End
+_Gy9I8d7HVMJy7edV:Button({
+    Title    = (string.char(84,101,108,101,112,111,114,116,101,32,116,111,32,69,110,100,32,55356,57281)),
+    Desc     = (string.char(86,97,105,32,112,97,114,97,32,111,32,102,105,110,97,108,32,100,111,32,109,97,112,97)),
+    Color    = Color3.fromHex((string.char(35,102,53,57,101,48,98))),
+    Icon     = (string.char(109,97,112,45,112,105,110)),
+    Justify  = (string.char(67,101,110,116,101,114)),
+    Callback = function()
+        if _ed6vnhd0Dvs7SW6x then
+            _ed6vnhd0Dvs7SW6x.CFrame = CFrame.new(Vector3.new(74.55, 714.23, 437.01))
+            _zHKyb5jsQ8KO2tK4:Notify({
+                Title   = (string.char(84,101,108,101,112,111,114,116,101)),
+                Content = (string.char(84,101,108,101,112,111,114,116,97,100,111,32,112,97,114,97,32,111,32,70,105,110,97,108,33,32,55356,57281)),
+                Icon    = (string.char(109,97,112,45,112,105,110)),
+                Duration = 3,
+            })
+        end
+    end
+})
+
+_Gy9I8d7HVMJy7edV:Space()
+
+-- Teleporte to Início
+_Gy9I8d7HVMJy7edV:Button({
+    Title    = (string.char(84,101,108,101,112,111,114,116,101,32,116,111,32,73,110,237,99,105,111,32,55357,56960)),
+    Desc     = (string.char(86,111,108,116,97,32,112,97,114,97,32,111,32,105,110,237,99,105,111,32,100,111,32,109,97,112,97)),
+    Color    = Color3.fromHex((string.char(35,49,48,98,57,56,49))),
+    Icon     = (string.char(104,111,109,101)),
+    Justify  = (string.char(67,101,110,116,101,114)),
+    Callback = function()
+        if _ed6vnhd0Dvs7SW6x then
+            _ed6vnhd0Dvs7SW6x.CFrame = CFrame.new(Vector3.new(31.01, 3.00, -134.78))
+            _zHKyb5jsQ8KO2tK4:Notify({
+                Title   = (string.char(84,101,108,101,112,111,114,116,101)),
+                Content = (string.char(84,101,108,101,112,111,114,116,97,100,111,32,112,97,114,97,32,111,32,73,110,237,99,105,111,33,32,55357,56960)),
+                Icon    = (string.char(104,111,109,101)),
+                Duration = 3,
+            })
+        end
+    end
+})
+
+-- ══════════════════════════════════════════════════════════
+--                    TAB: PLAYER
+-- ══════════════════════════════════════════════════════════
+
+do local _UqdGqFL2n3_1tc7t = _bT2E4pHk2m3f4B1A8II3:Tab({ end
+    Title    = (string.char(80,108,97,121,101,114)),
+    Icon     = (string.char(115,111,108,97,114,58,117,115,101,114,45,98,111,108,100,45,100,117,111,116,111,110,101)),
+    IconColor = Color3.fromHex((string.char(35,97,56,53,53,102,55))),
+    IconShape = (string.char(83,113,117,97,114,101)),
+    Border   = true,
+})
+
+_UqdGqFL2n3_1tc7t:Section({ Title = (string.char(77,111,100,105,102,105,99,97,100,111,114,101,115)) })
+
+-- God Mode
+_UqdGqFL2n3_1tc7t:Toggle({
+    Title    = (string.char(71,111,100,32,77,111,100,101,32,9728,65039)),
+    Desc     = (string.char(86,105,100,97,32,105,110,102,105,110,105,116,97,32,8212,32,118,111,99,234,32,110,227,111,32,109,111,114,114,101)),
+    Value    = false,
+    Callback = function(state)
+        _IsN6y7RdIz7PgzD(state)
+        _zHKyb5jsQ8KO2tK4:Notify({
+            Title   = (string.char(71,111,100,32,77,111,100,101)),
+            Content = state and (string.char(71,111,100,32,77,111,100,101,32,65,84,73,86,65,68,79,32,9728,65039)) or (string.char(71,111,100,32,77,111,100,101,32,100,101,115,97,116,105,118,97,100,111)),
+            Duration = 2,
+        })
+    end
+})
+
+_UqdGqFL2n3_1tc7t:Space()
+
+-- Noclip
+_UqdGqFL2n3_1tc7t:Toggle({
+    Title    = (string.char(78,111,99,108,105,112,32,55357,56443)),
+    Desc     = (string.char(65,116,114,97,118,101,115,115,97,32,112,97,114,101,100,101,115,32,40,99,104,227,111,32,112,114,101,115,101,114,118,97,100,111,41)),
+    Value    = false,
+    Callback = function(state)
+        _qNFqtx2r5U7e2T_8u = state
+        if not state then _RGm_5Kv9OC7cJ8JC() end
+        _zHKyb5jsQ8KO2tK4:Notify({
+            Title   = (string.char(78,111,99,108,105,112)),
+            Content = state and (string.char(78,111,99,108,105,112,32,65,84,73,86,65,68,79,32,55357,56443)) or (string.char(78,111,99,108,105,112,32,100,101,115,97,116,105,118,97,100,111)),
+            Duration = 2,
+        })
+    end
+})
+
+_UqdGqFL2n3_1tc7t:Space()
+
+-- Anti Ragdoll
+_UqdGqFL2n3_1tc7t:Toggle({
+    Title    = (string.char(65,110,116,105,32,82,97,103,100,111,108,108,32,55358,56756)),
+    Desc     = (string.char(73,109,112,101,100,101,32,111,32,112,101,114,115,111,110,97,103,101,109,32,100,101,32,99,97,105,114,47,114,97,103,100,111,108,108,97,114)),
+    Value    = false,
+    Callback = function(state)
+        _Bcqs2zC9Dr4PKX4b(state)
+        _zHKyb5jsQ8KO2tK4:Notify({
+            Title   = (string.char(65,110,116,105,32,82,97,103,100,111,108,108)),
+            Content = state and (string.char(65,110,116,105,32,82,97,103,100,111,108,108,32,65,84,73,86,65,68,79,32,55358,56756)) or (string.char(65,110,116,105,32,82,97,103,100,111,108,108,32,100,101,115,97,116,105,118,97,100,111)),
+            Duration = 2,
+        })
+    end
+})
+
+_UqdGqFL2n3_1tc7t:Space()
+
+-- Anti Lançamento
+_UqdGqFL2n3_1tc7t:Toggle({
+    Title    = (string.char(65,110,116,105,32,76,97,110,231,97,109,101,110,116,111,32,55357,57057,65039)),
+    Desc     = (string.char(73,109,112,101,100,101,32,100,101,32,115,101,114,32,106,111,103,97,100,111,32,112,114,97,32,113,117,97,108,113,117,101,114,32,100,105,114,101,231,227,111)),
+    Value    = false,
+    Callback = function(state)
+        _ucz4me9sGe5ea1YR(state)
+        _zHKyb5jsQ8KO2tK4:Notify({
+            Title   = (string.char(65,110,116,105,32,76,97,110,231,97,109,101,110,116,111)),
+            Content = state and (string.char(65,110,116,105,32,76,97,110,231,97,109,101,110,116,111,32,65,84,73,86,65,68,79,32,55357,57057,65039)) or (string.char(65,110,116,105,32,76,97,110,231,97,109,101,110,116,111,32,100,101,115,97,116,105,118,97,100,111)),
+            Duration = 2,
+        })
+    end
+})
+
+-- ══════════════════════════════════════════════════════════
+--                    TAB: COMBATE
+-- ══════════════════════════════════════════════════════════
+
+local _Mload4Cj3M5ORqm4 = _bT2E4pHk2m3f4B1A8II3:Tab({
+    Title    = (string.char(67,111,109,98,97,116,101)),
+    Icon     = (string.char(115,111,108,97,114,58,115,119,111,114,100,45,98,111,108,100,45,100,117,111,116,111,110,101)),
+    IconColor = Color3.fromHex((string.char(35,101,102,52,52,52,52))),
+    IconShape = (string.char(83,113,117,97,114,101)),
+    Border   = true,
+})
+
+_Mload4Cj3M5ORqm4:Section({ Title = (string.char(82,101,97,99,104)) })
+
+-- Reach Toggle
+_Mload4Cj3M5ORqm4:Toggle({
+    Title    = (string.char(82,101,97,99,104,32,9876,65039)),
+    Desc     = (string.char(65,117,109,101,110,116,97,32,111,32,97,108,99,97,110,99,101,32,100,111,32,115,101,117,32,104,105,116)),
+    Value    = false,
+    Callback = function(state)
+        _XkNm4iY4I8uxl8p0j6(state, _RE9PX2vZsCYh5c7U7)
+        _zHKyb5jsQ8KO2tK4:Notify({
+            Title   = (string.char(82,101,97,99,104)),
+            Content = state and ((string.char(82,101,97,99,104,32,65,84,73,86,65,68,79,32,9876,65039,32,8212,32)) .. _RE9PX2vZsCYh5c7U7 .. (string.char(32,115,116,117,100,115))) or (string.char(82,101,97,99,104,32,100,101,115,97,116,105,118,97,100,111)),
+            Duration = 2,
+        })
+    end
+})
+
+_Mload4Cj3M5ORqm4:Space()
+
+-- Reach Slider
+_Mload4Cj3M5ORqm4:Slider({
+    Title    = (string.char(68,105,115,116,226,110,99,105,97,32,100,111,32,82,101,97,99,104)),
+    Desc     = (string.char(81,117,97,110,116,111,115,32,115,116,117,100,115,32,100,101,32,97,108,99,97,110,99,101)),
+    IsTooltip = true,
+    IsTextbox = true,
+    Step     = 1,
+    Value    = {
+        Min     = 5,
+        Max     = 100,
+        Default = 10,
+    },
+    Callback = function(value)
+        _RE9PX2vZsCYh5c7U7 = value
+        if _Kufn4ES1K5S3Ef1O_7 then
+            _XkNm4iY4I8uxl8p0j6(true, value)
+        end
+    end
+})
