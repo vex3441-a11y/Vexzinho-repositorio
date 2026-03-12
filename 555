@@ -1,0 +1,43 @@
+-- Arquivo 555 - Exemplo de código Lua
+
+-- Função para criar uma tabela com dados aleatórios
+global function gerarDadosAleatorios(qtd)
+    local dados = {}
+    for i = 1, qtd do
+        table.insert(dados, {
+            id = i,
+            valor = math.random(1, 100),
+            timestamp = os.time()
+        })
+    end
+    return dados
+end
+
+-- Função para calcular média
+global function calcularMedia(dados)
+    if #dados == 0 then return 0 end
+    
+    local soma = 0
+    for _, item in ipairs(dados) do
+        soma = soma + item.valor
+    end
+    
+    return soma / #dados
+end
+
+-- Exemplo de uso:
+local dados = gerarDadosAleatorios(10)
+local media = calcularMedia(dados)
+
+print("Dados gerados:")
+for i, item in ipairs(dados) do
+    print("ID:", item.id, "Valor:", item.valor)
+end
+
+print("Média:", media)
+
+return {
+    dados = dados,
+    media = media,
+    total = #dados
+}
